@@ -33,9 +33,17 @@ public class Bcontroller {
 	
 	@RequestMapping("/list")
 	public String list(Model model){
+		System.out.println("log: ------------ list() 호출 ------------");
 		cmd = new ListCommand();
 		cmd.service(model);	//model 은 view에 데이터를 전달
 		return "list";
+	}
+	
+	@RequestMapping("/writeForm")
+	public String writeFrom(Model model) {
+		System.out.println("log: ------------ writeFrom() 호출 ------------");
+		
+		return "writeForm";
 	}
 	
 }

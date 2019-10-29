@@ -13,7 +13,7 @@
 	<h2>게시판 리스트</h2>
 	<hr width="400" color="tomato"/>
 	
-	<table border="1" cellpadding="0" cellspacing="0" whidth="500">
+	<table border="1" cellpadding="0" cellspacing="0" width="500">
 	<tr>
 		<td>번호</td>
 		<td>제목</td>
@@ -22,7 +22,7 @@
 		<td>조회수</td>
 	</tr>
 	<!-- 게시글 목록 가져오기 -->
-	<c:forEach items="{list}" var="vo">
+	<c:forEach items="${list}" var="vo">
 	<tr>
 		<td>${vo.bNO_BBS}</td>
 		<td>${vo.bSUBJECT}</td>
