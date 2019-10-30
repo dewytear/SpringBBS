@@ -90,5 +90,9 @@ public class Bdao {
 		}
 		
 		return bVOs;
-	}
+	}//list()
+	
+	public void write(String bNM_BBS, String bSUBJECT, String bCONTENT) {
+		
+	}//write()
 }

@@ -3,12 +3,17 @@
  */
 package com.spring.bbsController;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.soring.bbsVO.Bvo;
 import com.spring.bbsCommand.Bcommand;
 import com.spring.bbsCommand.ListCommand;
+import com.spring.bbsCommand.writeCommand;
 
 /**
  * @CLASS Name
@@ -45,5 +50,17 @@ public class Bcontroller {
 		
 		return "writeForm";
 	}
+
+	@RequestMapping("/writeOk")
+	public String writeOk(HttpServletRequest request, Model model) {
+		System.out.println("log: ------------ writeOk() 호출 ------------");
+		model.addAttribute("request", request);
+		cmd = new writeCommand();
+		return "writeForm";
+	}
 	
+	@ModelAttribute("Bvo")
+	public Bvo fromBacking() {
+		return new Bvo();
+	}
 }
