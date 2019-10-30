@@ -33,7 +33,7 @@
 	values(
     		seq_bbs.nextval
     		, 'test'
-            , 'test �Դϴ�.'
+            , 'test �Դϴ�.'
             , 'Hello BBS!!'
             , 0
             , seq_bbs.currval
@@ -42,3 +42,7 @@
     );
 
 	select * from MVC_BBS;
+	
+	GRANT SELECT, INSERT, UPDATE, DELETE ON SYSTEM.MVC_BBS TO scott;
+
+	create public synonym MVC_BBS for SYSTEM.MVC_BBS;
