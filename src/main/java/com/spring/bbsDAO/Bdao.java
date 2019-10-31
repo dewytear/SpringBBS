@@ -54,6 +54,7 @@ public class Bdao {
 		
 		try {
 			connection = dataSource.getConnection();
+			System.out.println("log: ------------ list connection 확보 ------------");
 			
 			String strQuery = "select bNO_BBS, bNM_BBS, bDT_BBS, bSUBJECT, bCONTENT, bHIT, bGROUP, bSTEP, bINDENT "
 							+ "from MVC_BBS "
@@ -94,5 +95,110 @@ public class Bdao {
 	
 	public void write(String bNM_BBS, String bSUBJECT, String bCONTENT) {
 		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			System.out.println("log: ------------ write connection 확보 ------------");
+			
+			String strQuery = "insert into MVC_BBS(bNO_BBS, bNM_BBS, bSUBJECT, bCONTENT, bHIT, bGROUP, bSTEP, bINDENT)\r\n"
+					 + "values(seq_bbs.nextval, ?, ?, ?, 0, seq_bbs.currval, 0, 0)";
+			preparedStatement = connection.prepareStatement(strQuery);
+			
+			preparedStatement.setString(1, bNM_BBS);
+			preparedStatement.setString(2, bSUBJECT);
+			preparedStatement.setString(3, bCONTENT);
+			
+			int n = preparedStatement.executeUpdate();
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
 	}//write()
+
+	public Bvo contentView(String bNO_BBS) {
+		
+		Bvo bVO = null;
+		
+		Connection connection = null;					//Connection 객체 생성
+		PreparedStatement preparedStatement = null;		//PreparedStatement 객체 생성
+		ResultSet resultSet = null;						//ResultSet 객체 생성
+		
+		try {
+			connection = dataSource.getConnection();
+			System.out.println("log: ------------ contentView connection 확보 ------------");
+
+			String strQuery = "select bNO_BBS, bNM_BBS, bDT_BBS, bSUBJECT, bCONTENT, bHIT, bGROUP, bSTEP, bINDENT "
+							+ "from MVC_BBS "
+							+ "where bNO_BBS = ? ";
+			preparedStatement = connection.prepareStatement(strQuery);
+			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));
+			resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				int iNO_BBS = resultSet.getInt("bNO_BBS");
+				String bNM_BBS = resultSet.getString("bNM_BBS");
+				Timestamp bDT_BBS = resultSet.getTimestamp("bDT_BBS");
+				String bSUBJECT = resultSet.getString("bSUBJECT");
+				String bCONTENT = resultSet.getString("bCONTENT");
+				int bHIT = resultSet.getInt("bHIT");
+				int bGROUP = resultSet.getInt("bGROUP");
+				int bSTEP = resultSet.getInt("bSTEP");
+				int bINDENT = resultSet.getInt("bINDENT");
+				
+				bVO = new Bvo(iNO_BBS, bNM_BBS, bDT_BBS, bSUBJECT, bCONTENT, bHIT, bGROUP, bSTEP, bINDENT);
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return bVO;
+		
+	}//contentView()
+	
+	private void addHit(String bNO_BBS) {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			System.out.println("log: ------------ addHit connection 확보 ------------");
+			
+			String strQuery = "update MVC_BBS set bHIT = bHIT + 1 where bNO_BBS = ?";
+			preparedStatement = connection.prepareStatement(strQuery);
+
+			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));
+			
+			int n = preparedStatement.executeUpdate();	//결과값이 integer로 나온다.
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}//addHit()
 }

@@ -25,7 +25,7 @@
 	<c:forEach items="${list}" var="vo">
 	<tr>
 		<td>${vo.bNO_BBS}</td>
-		<td>${vo.bSUBJECT}</td>
+		<td><a href="contentView?bNO_BBS=${vo.bNO_BBS}">${vo.bSUBJECT}</a></td>
 		<td>${vo.bNM_BBS}</td>
 		<td>${vo.bDT_BBS}</td>
 		<td>${vo.bHIT}</td>

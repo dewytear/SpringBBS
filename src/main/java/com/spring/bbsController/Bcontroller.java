@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.soring.bbsVO.Bvo;
 import com.spring.bbsCommand.Bcommand;
+import com.spring.bbsCommand.ContentCommand;
 import com.spring.bbsCommand.ListCommand;
 import com.spring.bbsCommand.writeCommand;
 
@@ -56,7 +57,17 @@ public class Bcontroller {
 		System.out.println("log: ------------ writeOk() 호출 ------------");
 		model.addAttribute("request", request);
 		cmd = new writeCommand();
+		cmd.service(model);
 		return "writeForm";
+	}
+	
+	@RequestMapping("/contentView")
+	public String contentView(HttpServletRequest request, Model model) {
+		System.out.println("log: ------------ contentView() 호출 ------------");
+		model.addAttribute("request", request);
+		cmd = new ContentCommand();
+		cmd.service(model);
+		return "contentView";
 	}
 	
 	@ModelAttribute("Bvo")

@@ -45,4 +45,10 @@
 	
 	GRANT SELECT, INSERT, UPDATE, DELETE ON SYSTEM.MVC_BBS TO scott;
 
-	create public synonym MVC_BBS for SYSTEM.MVC_BBS;
+	create OR REPLACE public synonym MVC_BBS for SYSTEM.MVC_BBS;
+	
+	-- create synonym
+	CREATE OR REPLACE public SYNONYM seq_bbs FOR system.seq_bbs;
+	-- set grant
+	GRANT ALTER, SELECT ON system.seq_bbs TO scott;
+
