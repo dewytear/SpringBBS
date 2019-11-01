@@ -10,7 +10,7 @@
 <body>
 <div align="center">
 	<h2>글쓰기 페이지</h2>
-	<hr width="400" color="tomato"/>
+	<hr width="500" color="tomato"/>
 
 	<table border="1" cellpadding="1" cellspacing="0" width="500">
 	<form:form commandName="Bvo" action="writeOk" method="post">
@@ -27,7 +27,7 @@
 			<td><form:textarea path="bCONTENT" cols="50" rows="8"/></td>
 		</tr>
 		<tr>
-			<td conspan="2"><input type="submit" value="등록"/></td>
+			<td align="right" conspan="2"><input type="submit" value="등록"/></td>
 		</tr>
 	</form:form>
 	</table>

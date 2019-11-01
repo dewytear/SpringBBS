@@ -159,6 +159,36 @@ public class Bdao {
 		
 	}//modify()
 
+	public void delete(String bNO_BBS) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			System.out.println("log: ------------ delete connection 확보 ------------");
+
+			String strQuery = "delete from MVC_BBS where bNO_BBS = ?";
+			preparedStatement = connection.prepareStatement(strQuery);
+			
+			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));	//Key value
+			
+			int n = preparedStatement.executeUpdate();
+			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+	}//delete()
+	
 	public Bvo contentView(String bNO_BBS) {
 		
 		addHit(bNO_BBS);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.soring.bbsVO.Bvo;
 import com.spring.bbsCommand.Bcommand;
 import com.spring.bbsCommand.ContentCommand;
+import com.spring.bbsCommand.DeleteCommand;
 import com.spring.bbsCommand.ListCommand;
 import com.spring.bbsCommand.ModifyCommand;
 import com.spring.bbsCommand.writeCommand;
@@ -86,7 +87,18 @@ public class Bcontroller {
 		cmd = new ModifyCommand();
 		cmd.service(model);
 		
-		return "redirect:list";	//수정 뒤에 목록보기로 돌아오도록 설정
+		return "redirect:list";	//수정 후 목록보기로 돌아오도록 설정
+	}
+
+	@RequestMapping("/delete")
+	public String delete(HttpServletRequest request, Model model) {
+		System.out.println("log: ------------ delete() 호출 ------------");
+		
+		model.addAttribute("request", request);
+		cmd = new DeleteCommand();
+		cmd.service(model);
+		
+		return "redirect:list";	//삭제 후 목록보기로 돌아오도록 설정
 	}
 	
 	@ModelAttribute("Bvo")
