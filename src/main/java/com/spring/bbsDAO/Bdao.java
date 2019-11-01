@@ -111,7 +111,7 @@ public class Bdao {
 			preparedStatement.setString(3, bCONTENT);
 			
 			int n = preparedStatement.executeUpdate();
-			
+			//성공, 실패에 따른 로직 없음
 		} catch (SQLException e){
 			e.printStackTrace();
 		}finally {
@@ -189,6 +189,7 @@ public class Bdao {
 			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));
 			
 			int n = preparedStatement.executeUpdate();	//결과값이 integer로 나온다.
+			//성공, 실패에 따른 로직 없음
 			
 		} catch (SQLException e){
 			e.printStackTrace();
