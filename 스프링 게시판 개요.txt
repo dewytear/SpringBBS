@@ -1,0 +1,80 @@
+[스프링 게시판 개요] : 게시판 프로젝트 구성
+
+
+ ## 패키지 : bbsCommand, bbsController, bbsDAO, bbsVO
+
+	* bbsCommand 패키지 구성 : 커맨드 객체의 구성
+	
+	 - Bcommand.java : 인터페이스
+	 
+		public interface Bcommand {
+			void service(Model model);
+		}
+	
+	 - ListCommand.java : 게시판의 리스트를 DB로부터 가져오는 객체
+	 
+		public class ListCommand implements Bcommand {
+			@Override
+			public void service(Model model) {
+				Bdao dao = new Bdao();
+				ArrayList<Bvo> bVOs = dao.list();
+				model.addAttribute("list", bVOs);
+			}
+		}
+		
+	 - WriteCommand.java : 글 등록 처리
+		
+		public class writeCommand implements Bcommand {
+			@Override
+			public void service(Model model) {
+				Map<String, Object> map = model.asMap();
+				HttpServletRequest request = (HttpServletRequest)map.get("request");
+				String bNM_BBS = request.getParameter("bNM_BBS");
+				String bSUBJECT = request.getParameter("bSUBJECT");
+				String bCONTENT = request.getParameter("bCONTENT");
+				Bdao dao = new Bdao();
+				dao.write(bNM_BBS, bSUBJECT, bCONTENT);
+			}
+		}
+		
+	 - ContentCommand.java : 내용보기 처리
+	 
+		public class ContentCommand implements Bcommand {
+			@Override
+			public void service(Model model) {
+				Map<String, Object> map = model.asMap();
+				HttpServletRequest request = (HttpServletRequest)map.get("request");
+				String bNO_BBS = request.getParameter("bNO_BBS");
+				Bdao dao = new Bdao();
+				Bvo bVO = dao.contentView(bNO_BBS);
+				model.addAttribute("contentView", bVO);
+			}
+		}
+		
+	 - DeleteCommand.java : 글 삭제 처리
+	 
+	 - ModifyCommand.java : 글 수정 처리(contentView.jsp 에서 수정한 내용을 DB에 등록)
+	 
+	 - ReplyCommand.java : 답글 처리
+	 
+	 - ReplyViewCommand.java : 답글 내용 보기
+	 
+	* bbsController 패키지 구성
+	
+	 - Bcontroller.java
+	 
+	* bbsDAO 패키지 구성
+	
+	 - Bdao.java
+	 
+	* bbsVO 패키지 구성
+	
+	 - Bvo.java
+	 
+	 
+ ## 뷰
+ 
+	list.jsp : 게시판 리스트
+	writeForm.jsp : 글쓰기 폼 페이지
+	contentView.jsp : 내용보기/수정/삭제 폼 페이지
+	

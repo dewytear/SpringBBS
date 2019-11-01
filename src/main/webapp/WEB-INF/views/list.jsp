@@ -32,7 +32,7 @@
 	</tr>
 	</c:forEach>
 	<tr>
-		<td colspan="5"><a href="writeForm">글쓰기</a></td>
+		<td colspan="5" align="center"><a href="writeForm">글쓰기</a></td>
 	</tr>
 	</table>
 

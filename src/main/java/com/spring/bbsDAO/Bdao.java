@@ -112,6 +112,7 @@ public class Bdao {
 			
 			int n = preparedStatement.executeUpdate();
 			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
+			
 		} catch (SQLException e){
 			e.printStackTrace();
 		}finally {
@@ -127,8 +128,9 @@ public class Bdao {
 
 	public Bvo contentView(String bNO_BBS) {
 		
-		Bvo bVO = null;
+		addHit(bNO_BBS);
 		
+		Bvo bVO = null;
 		Connection connection = null;					//Connection 객체 생성
 		PreparedStatement preparedStatement = null;		//PreparedStatement 객체 생성
 		ResultSet resultSet = null;						//ResultSet 객체 생성
