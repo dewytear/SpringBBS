@@ -14,7 +14,7 @@
 	<hr width="400" color="tomato"/>
 
 	<table border="1" cellpadding="1" cellspacing="0" width="500">
-	<form action="" method="post">
+	<form action="modify" method="post">
 		<tr>
 			<td>번호</td>
 			<td>${contentView.bNO_BBS}</td>
