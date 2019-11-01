@@ -12,12 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.soring.bbsVO.Bvo;
-import com.spring.bbsCommand.Bcommand;
-import com.spring.bbsCommand.ContentCommand;
-import com.spring.bbsCommand.DeleteCommand;
-import com.spring.bbsCommand.ListCommand;
-import com.spring.bbsCommand.ModifyCommand;
-import com.spring.bbsCommand.writeCommand;
+import com.spring.bbsCommand.*;
 
 /**
  * @CLASS Name
@@ -99,6 +94,17 @@ public class Bcontroller {
 		cmd.service(model);
 		
 		return "redirect:list";	//삭제 후 목록보기로 돌아오도록 설정
+	}
+	
+	@RequestMapping("/replyForm")
+	public String replyForm(HttpServletRequest request, Model model) {
+		System.out.println("log: ------------ replyForm() 호출 ------------");
+
+		model.addAttribute("request", request);
+		cmd = new ReplyFormCommand();
+		cmd.service(model);
+		
+		return "replyForm";
 	}
 	
 	@ModelAttribute("Bvo")

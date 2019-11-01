@@ -1,6 +1,5 @@
 [스프링 게시판 개요] : 게시판 프로젝트 구성
 
-
  ## 패키지 : bbsCommand, bbsController, bbsDAO, bbsVO
 
 	* bbsCommand 패키지 구성 : 커맨드 객체의 구성
@@ -51,32 +50,49 @@
 			}
 		}
 		
-	 - DeleteCommand.java : 글 삭제 처리
-	 
 	 - ModifyCommand.java : 글 수정 처리(contentView.jsp 에서 수정한 내용을 DB에 등록)
 	 
-		public void service(Model model) {
-			Map<String, Object> map = model.asMap();
-			HttpServletRequest request = (HttpServletRequest)map.get("request");
-			String bNO_BBS = request.getParameter("bNO_BBS");
-			String bNM_BBS = request.getParameter("bNM_BBS");
-			String bSUBJECT = request.getParameter("bSUBJECT");
-			String bCONTENT = request.getParameter("bCONTENT");
-			Bdao dao = new Bdao();
-			dao.modify(bNO_BBS, bNM_BBS, bSUBJECT, bCONTENT);
+		public class ModifyCommand implements Bcommand {
+			@Override
+			public void service(Model model) {
+				Map<String, Object> map = model.asMap();
+				HttpServletRequest request = (HttpServletRequest)map.get("request");
+				String bNO_BBS = request.getParameter("bNO_BBS");
+				String bNM_BBS = request.getParameter("bNM_BBS");
+				String bSUBJECT = request.getParameter("bSUBJECT");
+				String bCONTENT = request.getParameter("bCONTENT");
+				Bdao dao = new Bdao();
+				dao.modify(bNO_BBS, bNM_BBS, bSUBJECT, bCONTENT);
+			}
 		}
 	
+	 - DeleteCommand.java : 글 삭제 처리
+	 
+		public class DeleteCommand implements Bcommand {
+			@Override
+			public void service(Model model) {
+				Map<String, Object> map = model.asMap();
+				HttpServletRequest request = (HttpServletRequest)map.get("request");
+				String bNO_BBS = request.getParameter("bNO_BBS");
+				Bdao dao = new Bdao();
+				dao.delete(bNO_BBS);
+			}
+		}
+	 
+	 - ReplyFormCommand.java : 답글 내용 보기
+	 
 	 - ReplyCommand.java : 답글 처리
 	 
-	 - ReplyViewCommand.java : 답글 내용 보기
 	 
 	* bbsController 패키지 구성
 	
 	 - Bcontroller.java
 	 
+	 
 	* bbsDAO 패키지 구성
 	
 	 - Bdao.java
+	 
 	 
 	* bbsVO 패키지 구성
 	

@@ -43,7 +43,7 @@
 				<a href="list">목록보기</a>
 				&nbsp;&nbsp;&nbsp;<input type="submit" value="수정하기"/>
 				&nbsp;&nbsp;&nbsp;<a href="delete?bNO_BBS=${contentView.bNO_BBS}">삭제</a>
-				&nbsp;&nbsp;&nbsp;<a href="$">답변</a>
+				&nbsp;&nbsp;&nbsp;<a href="replyForm??bNO_BBS=${contentView.bNO_BBS}">답변</a>
 			</td>
 		</tr>
 	</form>
