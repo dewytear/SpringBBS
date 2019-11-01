@@ -86,7 +86,7 @@ public class Bcontroller {
 		cmd = new ModifyCommand();
 		cmd.service(model);
 		
-		return "modify";
+		return "redirect:list";	//수정 뒤에 목록보기로 돌아오도록 설정
 	}
 	
 	@ModelAttribute("Bvo")

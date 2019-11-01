@@ -40,7 +40,7 @@ public class ContentCommand implements Bcommand {
 		String bNO_BBS = request.getParameter("bNO_BBS");
 		
 		Bdao dao = new Bdao();
-		Bvo bVO = dao.contentView(bNO_BBS);
+		Bvo bVO = dao.contentView(bNO_BBS);	//Key value
 		
 		model.addAttribute("contentView", bVO);
 	}

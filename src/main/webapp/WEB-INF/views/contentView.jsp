@@ -15,6 +15,9 @@
 
 	<table border="1" cellpadding="1" cellspacing="0" width="500">
 	<form action="modify" method="post">
+		<!-- 게시물 번호 또한 전송이 되어야하기에 input설정이 되어야하나,
+			수정이 되지않아야하는 값이기때문에 type을 hidden으로 설정해준다. -->
+		<input type="hidden" name="0bNO_BBS" value="${contentView.bNO_BBS}"/>
 		<tr>
 			<td>번호</td>
 			<td>${contentView.bNO_BBS}</td>

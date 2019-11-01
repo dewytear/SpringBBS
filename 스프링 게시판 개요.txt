@@ -55,6 +55,17 @@
 	 
 	 - ModifyCommand.java : 글 수정 처리(contentView.jsp 에서 수정한 내용을 DB에 등록)
 	 
+		public void service(Model model) {
+			Map<String, Object> map = model.asMap();
+			HttpServletRequest request = (HttpServletRequest)map.get("request");
+			String bNO_BBS = request.getParameter("bNO_BBS");
+			String bNM_BBS = request.getParameter("bNM_BBS");
+			String bSUBJECT = request.getParameter("bSUBJECT");
+			String bCONTENT = request.getParameter("bCONTENT");
+			Bdao dao = new Bdao();
+			dao.modify(bNO_BBS, bNM_BBS, bSUBJECT, bCONTENT);
+		}
+	
 	 - ReplyCommand.java : 답글 처리
 	 
 	 - ReplyViewCommand.java : 답글 내용 보기

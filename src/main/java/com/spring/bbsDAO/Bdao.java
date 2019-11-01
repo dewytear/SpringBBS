@@ -126,6 +126,39 @@ public class Bdao {
 		
 	}//write()
 
+	public void modify(String bNO_BBS, String bNM_BBS, String bSUBJECT, String bCONTENT) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			System.out.println("log: ------------ modify connection 확보 ------------");
+
+			String strQuery = "update MVC_BBS set bNM_BBS = ?, bSUBJECT = ?, bCONTENT = ? where bNO_BBS = ?";
+			preparedStatement = connection.prepareStatement(strQuery);
+			
+			preparedStatement.setString(1, bNM_BBS);
+			preparedStatement.setString(2, bSUBJECT);
+			preparedStatement.setString(3, bCONTENT);
+			preparedStatement.setInt(4, Integer.parseInt(bNO_BBS));	//Key value
+			
+			int n = preparedStatement.executeUpdate();
+			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+	}//modify()
+
 	public Bvo contentView(String bNO_BBS) {
 		
 		addHit(bNO_BBS);
@@ -143,7 +176,7 @@ public class Bdao {
 							+ "from MVC_BBS "
 							+ "where bNO_BBS = ? ";
 			preparedStatement = connection.prepareStatement(strQuery);
-			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));
+			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));		//Key value
 			resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
@@ -188,7 +221,7 @@ public class Bdao {
 			String strQuery = "update MVC_BBS set bHIT = bHIT + 1 where bNO_BBS = ?";
 			preparedStatement = connection.prepareStatement(strQuery);
 
-			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));
+			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));	//Key value
 			
 			int n = preparedStatement.executeUpdate();	//결과값이 integer로 나온다.
 			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
