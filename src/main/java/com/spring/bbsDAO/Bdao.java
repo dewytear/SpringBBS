@@ -110,7 +110,7 @@ public class Bdao {
 			preparedStatement.setString(2, bSUBJECT);
 			preparedStatement.setString(3, bCONTENT);
 			
-			int n = preparedStatement.executeUpdate();
+			int n = preparedStatement.executeUpdate();	//실행 결과값이 integer로 나온다.
 			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
 			
 		} catch (SQLException e){
@@ -143,7 +143,7 @@ public class Bdao {
 			preparedStatement.setString(3, bCONTENT);
 			preparedStatement.setInt(4, Integer.parseInt(bNO_BBS));	//Key value
 			
-			int n = preparedStatement.executeUpdate();
+			int n = preparedStatement.executeUpdate();	//실행 결과값이 integer로 나온다.
 			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
 			
 		} catch (SQLException e){
@@ -173,7 +173,7 @@ public class Bdao {
 			
 			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));	//Key value
 			
-			int n = preparedStatement.executeUpdate();
+			int n = preparedStatement.executeUpdate();	//실행 결과값이 integer로 나온다.
 			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
 			
 		} catch (SQLException e){
@@ -253,7 +253,7 @@ public class Bdao {
 
 			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));	//Key value
 			
-			int n = preparedStatement.executeUpdate();	//결과값이 integer로 나온다.
+			int n = preparedStatement.executeUpdate();	//실행 결과값이 integer로 나온다.
 			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
 			
 		} catch (SQLException e){
@@ -267,4 +267,53 @@ public class Bdao {
 			}
 		}
 	}//addHit()
+
+	public Bvo replyForm(String bNO_BBS) {
+
+		Bvo bVO = null;
+		Connection connection = null;					//Connection 객체 생성
+		PreparedStatement preparedStatement = null;		//PreparedStatement 객체 생성
+		ResultSet resultSet = null;						//ResultSet 객체 생성
+		
+		try {
+			connection = dataSource.getConnection();
+			System.out.println("log: ------------ replyForm connection 확보 ------------");
+
+			//String strQuery = "select bNO_BBS, bNM_BBS, bDT_BBS, bSUBJECT, bCONTENT, bHIT, bGROUP, bSTEP, bINDENT "
+			//				+ "from MVC_BBS "
+			//				+ "where bNO_BBS = ? ";
+			String strQuery = "select * from MVC_BBS where bNO_BBS = ? ";
+			preparedStatement = connection.prepareStatement(strQuery);
+			preparedStatement.setInt(1, Integer.parseInt(bNO_BBS));		//Key value
+			resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				int iNO_BBS = resultSet.getInt("bNO_BBS");
+				String bNM_BBS = resultSet.getString("bNM_BBS");
+				Timestamp bDT_BBS = resultSet.getTimestamp("bDT_BBS");
+				String bSUBJECT = resultSet.getString("bSUBJECT");
+				String bCONTENT = resultSet.getString("bCONTENT");
+				int bHIT = resultSet.getInt("bHIT");
+				int bGROUP = resultSet.getInt("bGROUP");
+				int bSTEP = resultSet.getInt("bSTEP");
+				int bINDENT = resultSet.getInt("bINDENT");
+				
+				bVO = new Bvo(iNO_BBS, bNM_BBS, bDT_BBS, bSUBJECT, bCONTENT, bHIT, bGROUP, bSTEP, bINDENT);
+			}//if()
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return bVO;
+		
+	}//replyForm()
 }

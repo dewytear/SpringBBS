@@ -81,6 +81,18 @@
 	 
 	 - ReplyFormCommand.java : 답글 내용 보기
 	 
+		public class ReplyFormCommand implements Bcommand {
+			@Override
+			public void service(Model model) {
+				Map<String, Object> map = model.asMap();
+				HttpServletRequest request = (HttpServletRequest)map.get("request");
+				String bNO_BBS = request.getParameter("bNO_BBS");
+				Bdao dao = new Bdao();
+				Bvo bVO = dao.replyForm(bNO_BBS);
+				model.addAttribute("replyForm", bVO);
+			}
+		}
+	 
 	 - ReplyCommand.java : 답글 처리
 	 
 	 

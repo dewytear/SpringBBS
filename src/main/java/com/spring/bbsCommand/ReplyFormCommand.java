@@ -14,13 +14,14 @@ import com.spring.bbsDAO.Bdao;
 
 /**
  * @CLASS Name
- *  ReplyViewCommand
+ *  ReplyFormCommand
  * 
  * @AUTHOR     : Rony Kwak
  * @CREATE DATE: 2019-11-01
  * @PROJECT    : SpringBBS
  * @PACKAGE    : com.spring.bbsCommand
- * @Description: 
+ * @Description: 글에 대한 내용을 확인하고 
+ * 				답글을 달기위해 원문의 내용을 가져온다.
  * =============================
  * @Change History
  * v1.0: 
@@ -39,7 +40,9 @@ public class ReplyFormCommand implements Bcommand {
 		String bNO_BBS = request.getParameter("bNO_BBS");	//Key value
 		
 		Bdao dao = new Bdao();
-		Bvo bVO = dao.replayForm("bNO_BBS");
+		Bvo bVO = dao.replyForm(bNO_BBS);
+		
+		model.addAttribute("replyForm", bVO);
 	}
 
 }
