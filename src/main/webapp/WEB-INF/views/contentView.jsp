@@ -13,6 +13,7 @@
 	<h2>글내용 확인</h2>
 	<hr width="500" color="tomato"/>
 
+	<font size="2">
 	<table border="1" cellpadding="1" cellspacing="0" width="500">
 	<form action="modify" method="post">
 		<!-- 게시물 번호 또한 전송이 되어야하기에 input설정이 되어야하나,
@@ -43,11 +44,12 @@
 				<a href="list">목록보기</a>
 				&nbsp;&nbsp;&nbsp;<input type="submit" value="수정하기"/>
 				&nbsp;&nbsp;&nbsp;<a href="delete?bNO_BBS=${contentView.bNO_BBS}">삭제</a>
-				&nbsp;&nbsp;&nbsp;<a href="replyForm??bNO_BBS=${contentView.bNO_BBS}">답변</a>
+				&nbsp;&nbsp;&nbsp;<a href="replyForm?bNO_BBS=${contentView.bNO_BBS}">답변</a>
 			</td>
 		</tr>
 	</form>
 	</table>
+	</font>
 
 </div>
 

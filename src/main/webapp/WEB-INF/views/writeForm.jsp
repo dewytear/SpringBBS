@@ -12,6 +12,7 @@
 	<h2>글쓰기 페이지</h2>
 	<hr width="500" color="tomato"/>
 
+	<font size="2">
 	<table border="1" cellpadding="1" cellspacing="0" width="500">
 	<form:form commandName="Bvo" action="writeOk" method="post">
 		<tr>
@@ -31,6 +32,7 @@
 		</tr>
 	</form:form>
 	</table>
+	</font>
 
 </div>
 </body>

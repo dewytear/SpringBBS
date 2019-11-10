@@ -12,7 +12,7 @@
 <div align="center">
 	<h2>게시판 리스트</h2>
 	<hr width="500" color="tomato"/>
-	
+	<font size="2">
 	<table border="1" cellpadding="1" cellspacing="0" width="500">
 	<tr>
 		<td align="center">번  호</td>
@@ -30,7 +30,7 @@
 			<a href="contentView?bNO_BBS=${vo.bNO_BBS}">${vo.bSUBJECT}</a>
 		</td>
 		<td>${vo.bNM_BBS}</td>
-		<td>${vo.bDT_BBS}</td>
+		<td align="center">${vo.bDT_BBS}</td>
 		<td align="center">${vo.bHIT}</td>
 	</tr>
 	</c:forEach>
@@ -38,7 +38,7 @@
 		<td colspan="5" align="right"><a href="writeForm">글쓰기</a></td>
 	</tr>
 	</table>
-
+	</font>
 </div>
 
 </body>

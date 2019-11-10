@@ -13,6 +13,7 @@
 	<h2>답글 페이지</h2>
 	<hr width="500" color="tomato"/>
 
+	<font size="2">
 	<table border="1" cellpadding="1" cellspacing="0" width="500">
 	<form action="replyOk" method="post">		
 	<!-- 게시물 번호, 그룹, 스텝, 인덴트 또한 전송이 되어야하기에 input설정이 되어야하나,
@@ -50,6 +51,7 @@
 		</tr>
 	</form>
 	</table>
+	</font>
 
 </div>
 

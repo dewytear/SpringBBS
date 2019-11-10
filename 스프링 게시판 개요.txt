@@ -94,7 +94,22 @@
 		}
 	 
 	 - ReplyCommand.java : 답글 처리
-	 
+		public class ReplyCommand implements Bcommand {
+			@Override
+			public void service(Model model) {
+				Map<String, Object> map = model.asMap();
+				HttpServletRequest request = (HttpServletRequest)map.get("request");
+				String bNO_BBS = request.getParameter("bNO_BBS");
+				String bNM_BBS = request.getParameter("bNM_BBS");
+				String bSUBJECT = request.getParameter("bSUBJECT");
+				String bCONTENT = request.getParameter("bCONTENT");
+				String bGROUP = request.getParameter("bGROUP");
+				String bSTEP = request.getParameter("bSTEP");
+				String bINDENT = request.getParameter("bINDENT");
+				Bdao dao = new Bdao();
+				dao.replyOk(bNO_BBS, bNM_BBS, bSUBJECT, bCONTENT, bGROUP, bSTEP, bINDENT);
+			}
+		}
 	 
 	* bbsController 패키지 구성
 	
@@ -116,4 +131,6 @@
 	list.jsp : 게시판 리스트
 	writeForm.jsp : 글쓰기 폼 페이지
 	contentView.jsp : 내용보기/수정/삭제 폼 페이지
+	replyForm.jsp : 답글쓰기 폼 페이지
+	
 	
