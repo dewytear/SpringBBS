@@ -35,7 +35,15 @@ import com.soring.bbsVO.Bvo;
 public class Bdao {
 
 	DataSource dataSource;
-	
+	/**
+	 * - 아래의 공통부분을 JBBC를 이용하여 간소하게 처리 할 수 있다.
+	 * 1. 드라이버로딩
+	 * 2. Conneection
+	 * 3. Statement
+	 * 4. 자원해제
+	 * 
+	 * JDBC외에도 하이버네이트, MuBatis를 이용해서 간소화 할 수 있다.
+	 **/
 	public Bdao() {
 		try {
 			Context ctx = new InitialContext();

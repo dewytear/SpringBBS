@@ -133,4 +133,30 @@
 	contentView.jsp : 내용보기/수정/삭제 폼 페이지
 	replyForm.jsp : 답글쓰기 폼 페이지
 	
-	
+
+----------------------------------------------------------------------------------	
+[jdbcTemplate 사용방법]
+
+# pom.xml에서 라이브러리를 불러온다. : org.springframework.spring-jdbc 설정
+
+	<dependency>
+	   <groupId>org.springframework</groupId>
+	   <artifactId>spring-jdbc</artifactId>
+	   <version>${org.springframework-version}</version>
+	</dependency>
+
+# DataSource 설정(Servlet-context.xml)
+
+	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:dewydb"/>
+		<beans:property name="username" value="scott"/>
+	    <beans:property name="password" value="tiger"/>
+	</beans:bean>
+
+# JdbcTemplate 설정(Servlet-context.xml)
+
+	<beans:bean name="template" class="org.springframework.jdbc.core.JdbcTemplate">
+		<beans:property name="dataSource" ref="dataSource"/>
+	</beans:bean>
+
