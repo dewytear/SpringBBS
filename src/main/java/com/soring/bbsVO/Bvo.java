@@ -21,7 +21,7 @@ import java.sql.Timestamp;
  * =============================
  **/
 public class Bvo {
-	// TODO : DB에서 가져오는 객체(컬럼들) 만들기
+	// DB에서 가져오는 객체(컬럼들) 만들기
 	int bNO_BBS;
 	String bNM_BBS;
 	Timestamp bDT_BBS;

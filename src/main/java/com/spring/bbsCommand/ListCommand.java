@@ -29,7 +29,7 @@ public class ListCommand implements Bcommand {
 
 	@Override
 	public void service(Model model) {
-		// TODO : DB에 접속하여 리스트 가져오는 Command (Controller에서 호출)
+		// DB에 접속하여 리스트 가져오는 Command (Controller에서 호출)
 		Bdao dao = new Bdao();
 		ArrayList<Bvo> bVOs = dao.list();
 		model.addAttribute("list", bVOs);	//bVOs를 모델에 전달

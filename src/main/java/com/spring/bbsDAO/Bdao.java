@@ -46,7 +46,7 @@ public class Bdao {
 	}
 	
 	public ArrayList<Bvo> list() {
-		// TODO : DB에 접속하여 글목록 가져오기(Command 에서 호출)
+		// DB에 접속하여 글목록 가져오기(Command 에서 호출)
 		ArrayList<Bvo> bVOs = new ArrayList<Bvo>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
