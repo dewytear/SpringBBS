@@ -25,7 +25,10 @@
 	<c:forEach items="${list}" var="vo">
 	<tr>
 		<td align="center">${vo.bNO_BBS}</td>
-		<td><a href="contentView?bNO_BBS=${vo.bNO_BBS}">${vo.bSUBJECT}</a></td>
+		<td>
+			<c:forEach begin="1" end="${vo.bINDENT}">　</c:forEach>
+			<a href="contentView?bNO_BBS=${vo.bNO_BBS}">${vo.bSUBJECT}</a>
+		</td>
 		<td>${vo.bNM_BBS}</td>
 		<td>${vo.bDT_BBS}</td>
 		<td align="center">${vo.bHIT}</td>

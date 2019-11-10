@@ -56,6 +56,8 @@ public class Bdao {
 			connection = dataSource.getConnection();
 			System.out.println("log: ------------ list connection 확보 ------------");
 			
+			// Group은 원글의 번호이며 큰숫자가 최근글이 된다.
+			// Step으로 정렬을 하는 이유는 댓글에 대한 최신순으로 정렬하기위한 순차적 번호이다.(작은수가 최근 댓글)
 			String strQuery = "select bNO_BBS, bNM_BBS, bDT_BBS, bSUBJECT, bCONTENT, bHIT, bGROUP, bSTEP, bINDENT "
 							+ "from MVC_BBS "
 							+ "order by bGROUP desc, bSTEP asc";
@@ -316,4 +318,75 @@ public class Bdao {
 		return bVO;
 		
 	}//replyForm()
+	
+
+	public void replyOk(String bNO_BBS, String bNM_BBS, String bSUBJECT, String bCONTENT, String bGROUP, String bSTEP, String bINDENT) {
+
+		replySet(bGROUP, bSTEP);
+		
+		Connection connection = null;					//Connection 객체 생성
+		PreparedStatement preparedStatement = null;		//PreparedStatement 객체 생성
+		
+		try {
+			connection = dataSource.getConnection();
+			System.out.println("log: ------------ replyOk connection 확보 ------------");
+
+			String strQuery = "insert into MVC_BBS(bNO_BBS, bNM_BBS, bSUBJECT, bCONTENT, bHIT, bGROUP, bSTEP, bINDENT)\r\n"
+					 + "values(seq_bbs.nextval, ?, ?, ?, 0, ?, ?, ?)";
+			
+			preparedStatement = connection.prepareStatement(strQuery);
+			
+			preparedStatement.setString(1, bNM_BBS);
+			preparedStatement.setString(2, bSUBJECT);
+			preparedStatement.setString(3, bCONTENT);
+			
+			preparedStatement.setInt(4, Integer.parseInt(bGROUP));
+			preparedStatement.setInt(5, Integer.parseInt(bSTEP)+1);
+			preparedStatement.setInt(6, Integer.parseInt(bINDENT)+1);
+			
+			int n = preparedStatement.executeUpdate();	//실행 결과값이 integer로 나온다.
+			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}//replyOk()
+	
+	public void replySet(String group, String step) {
+		
+		Connection connection = null;					//Connection 객체 생성
+		PreparedStatement preparedStatement = null;		//PreparedStatement 객체 생성
+
+		try {
+			connection = dataSource.getConnection();
+			System.out.println("log: ------------ replySet connection 확보 ------------");
+
+			String strQuery = "update MVC_BBS set bSTEP = bSTEP + 1 where bGROUP = ? and bSTEP > ?";
+			
+			preparedStatement = connection.prepareStatement(strQuery);
+			
+			preparedStatement.setInt(1, Integer.parseInt(group));
+			preparedStatement.setInt(2, Integer.parseInt(step));
+			
+			int n = preparedStatement.executeUpdate();	//실행 결과값이 integer로 나온다.
+			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
 }

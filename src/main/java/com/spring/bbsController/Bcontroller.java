@@ -107,6 +107,17 @@ public class Bcontroller {
 		return "replyForm";
 	}
 	
+	@RequestMapping("/replyOk")
+	public String replayOk(HttpServletRequest request, Model model) {
+		System.out.println("log: ------------ replayOk() 호출 ------------");
+		
+		model.addAttribute("request", request);
+		cmd = new ReplyCommand();
+		cmd.service(model);
+		
+		return "redirect:list";	//댓글 후 목록보기로 돌아오도록 설정
+	}
+	
 	@ModelAttribute("Bvo")
 	public Bvo fromBacking() {
 		return new Bvo();
