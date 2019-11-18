@@ -5,6 +5,8 @@ package com.spring.bbsController;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.soring.bbsVO.Bvo;
 import com.spring.bbsCommand.*;
+import com.spring.template.StaticTemplate;
 
 /**
  * @CLASS Name
@@ -34,6 +37,15 @@ public class Bcontroller {
 
 	//Dispatcher Servlet을 통해 요청을 받아온다.
 	Bcommand cmd = null;
+	
+	private JdbcTemplate template;
+	
+	@Autowired
+	// Servlet-context.xml 에 생성한 Jdbc bean에 연결 후 공유하기 위해 Static으로 메모리에 공유
+	public void setTemplate(JdbcTemplate template) {
+		this.template = template;
+		StaticTemplate.template = this.template;
+	}
 	
 	@RequestMapping("/list")
 	public String list(Model model){
