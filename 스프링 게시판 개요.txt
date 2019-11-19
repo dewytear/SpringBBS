@@ -179,3 +179,34 @@
 		<beans:property name="dataSource" ref="dataSource"/>
 	</beans:bean>
 
+
+# JdbcTemplate에서 사용할 수 있는 메소드
+
+ - query() : select 쿼리를 실핼 할 때 사용하는 메소드
+     : List query(String sql, Object[] args, RowMapper rowMapper)
+     : List query(String sql, RowMapper rowMapper)
+
+     . BeanPropertyRowMapper<T> 클래스는 RowMapper<T> 인터페이스를 구현
+     . RowMapper<T> 인터페이스에서 정의하고 있는 메소드는
+       : mapRow() 메소드 - ResultSet에서 읽어온 값을 이용해서 원하는 타입의 객체를 생성해서 리턴
+         T mapRow(ResultSet rs, int rowNum) throws SQLException; //rowNum 행번호(0부터 시작)
+
+ - queryForObject() : 쿼리 실행 결과가 하나의 레코드(Row)를 가져오는 경우에 사용
+                     전달되는 각 파라미터가 query() 메소드와 동일하다.
+                     List를 반환하는 대신에 한 개의 객체를 리턴
+                     리턴되는 행의 개수가 한개가 아닌 경우에는 IncorrectResultSizeDataAccessException 예외 발생
+
+     : public Object queryForObject(String sql, RowMapper rowMapper)
+     : public Object queryForObject(String sql, Object[] args, RowMapper rowMapper)
+
+     리턴 타입이 Object가 아닌 경우에는 Int, Long 타입의 결과를 구할 때 사용하는
+     queryForInt(), queryForLong()
+
+ - update() : insert, update, delete 쿼리를 실행할 때 사용하는 메소드
+             쿼리 실행결과 변경된 행의 개수를 리턴
+
+     : update(String sql)
+     : update(String sql, Object[] args)
+
+ - execute() : Connection을 직업 사용해야 하는 경우에 사용하는 메소드
+     . Connection의 생성과 종료는 JdbcTemplate에서 처리하기 때문에 Connection을 종료할 필요가 없다.
