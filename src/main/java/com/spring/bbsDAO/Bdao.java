@@ -18,6 +18,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.soring.bbsVO.Bvo;
@@ -72,7 +73,9 @@ public class Bdao {
 						+ "order by bGROUP desc, bSTEP asc";
 
 		/** JdbcTemplate에서 사용할 수 있는 메소드
-		 *	- query() : select 쿼리를 실핼 할 때 사용
+		 *	- query() : select 쿼리를 실핼 할 때 사용하는 메소드
+		 *		: List query(String sql, Object[] args, RowMapper rowMapper)
+		 *		: List query(String sql, RowMapper rowMapper)
 		 *
 		 *		. BeanPropertyRowMapper<T> 클래스는 RowMapper<T> 인터페이스를 구현
 		 *		. RowMapper<T> 인터페이스에서 정의하고 있는 메소드는
@@ -80,7 +83,12 @@ public class Bdao {
 		 *			T mapRow(ResultSet rs, int rowNum) throws SQLException;	//rowNum 행번호(0부터 시작)
 		 *
 		 *	- queryForObject()
-		 *	- update()
+		 *	- update() : insert, update, delete 쿼리를 실행할 때 사용하는 메소드
+		 *				쿼리 실행결과 변경된 행의 개수를 리턴
+		 *
+		 *		: update(String sql)
+		 *		: update(String sql, Object[] args)
+		 *
 		 *	- execute()
 		 **/
 		//SQL쿼리문을 이용해서 ResultSet으로 읽어와 Vbo 타입의 객체로 리턴하여 준다.
@@ -139,7 +147,7 @@ public class Bdao {
 	
 	public void write(final String bNM_BBS, final String bSUBJECT, final String bCONTENT) {
 		
-			this.template.update(new PreparedStatementCreator() {
+		this.template.update(new PreparedStatementCreator() {
 				
 				@Override
 				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException{
@@ -189,36 +197,54 @@ public class Bdao {
 		
 	}//write()
 
-	public void modify(String bNO_BBS, String bNM_BBS, String bSUBJECT, String bCONTENT) {
-		
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		
-		try {
-			connection = dataSource.getConnection();
-			System.out.println("log: ------------ modify connection 확보 ------------");
+	//local에서 수정되지 않도록 하기 위해 parameter에 final을 붙여준다.
+	public void modify(final String bNO_BBS, final String bNM_BBS, final String bSUBJECT, final String bCONTENT) {
 
-			String strQuery = "update MVC_BBS set bNM_BBS = ?, bSUBJECT = ?, bCONTENT = ? where bNO_BBS = ?";
-			preparedStatement = connection.prepareStatement(strQuery);
-			
-			preparedStatement.setString(1, bNM_BBS);
-			preparedStatement.setString(2, bSUBJECT);
-			preparedStatement.setString(3, bCONTENT);
-			preparedStatement.setInt(4, Integer.parseInt(bNO_BBS));	//Key value
-			
-			int n = preparedStatement.executeUpdate();	//실행 결과값이 integer로 나온다.
-			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
-			
-		} catch (SQLException e){
-			e.printStackTrace();
-		}finally {
-			try {
-				if(preparedStatement != null) preparedStatement.close();
-				if(connection != null) connection.close();
-			}catch(Exception e2) {
-				e2.printStackTrace();
+		String strQuery = "update MVC_BBS set bNM_BBS = ?, bSUBJECT = ?, bCONTENT = ? where bNO_BBS = ?";
+		
+		this.template.update(strQuery, new PreparedStatementSetter() {
+
+				@Override
+				public void setValues(PreparedStatement preparedStatement) throws SQLException{
+	
+					preparedStatement.setString(1, bNM_BBS);
+					preparedStatement.setString(2, bSUBJECT);
+					preparedStatement.setString(3, bCONTENT);
+					preparedStatement.setInt(4, Integer.parseInt(bNO_BBS));	//Key value
+				}
 			}
-		}
+		);
+		
+//[region] 기존 소스
+//		Connection connection = null;
+//		PreparedStatement preparedStatement = null;
+//		
+//		try {
+//			connection = dataSource.getConnection();
+//			System.out.println("log: ------------ modify connection 확보 ------------");
+//
+//			String strQuery = "update MVC_BBS set bNM_BBS = ?, bSUBJECT = ?, bCONTENT = ? where bNO_BBS = ?";
+//			preparedStatement = connection.prepareStatement(strQuery);
+//			
+//			preparedStatement.setString(1, bNM_BBS);
+//			preparedStatement.setString(2, bSUBJECT);
+//			preparedStatement.setString(3, bCONTENT);
+//			preparedStatement.setInt(4, Integer.parseInt(bNO_BBS));	//Key value
+//			
+//			int n = preparedStatement.executeUpdate();	//실행 결과값이 integer로 나온다.
+//			//성공, 실패에 따른 로직 없음(n값 사용하지않음)
+//			
+//		} catch (SQLException e){
+//			e.printStackTrace();
+//		}finally {
+//			try {
+//				if(preparedStatement != null) preparedStatement.close();
+//				if(connection != null) connection.close();
+//			}catch(Exception e2) {
+//				e2.printStackTrace();
+//			}
+//		}
+//[end]
 		
 	}//modify()
 
