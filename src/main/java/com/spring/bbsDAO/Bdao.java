@@ -92,7 +92,7 @@ public class Bdao {
 		 *		: update(String sql)
 		 *		: update(String sql, Object[] args)
 		 *
-		 *	- execute() : Connection을 직업 사용해야 하는 경우에 사용하는 메소드
+		 *	- execute() : Connection을 직접 사용해야 하는 경우에 사용하는 메소드
 		 *		. Connection의 생성과 종료는 JdbcTemplate에서 처리하기 때문에 Connection을 종료할 필요가 없다.
 		 **/
 		//SQL쿼리문을 이용해서 ResultSet으로 읽어와 Vbo 타입의 객체로 리턴하여 준다.
